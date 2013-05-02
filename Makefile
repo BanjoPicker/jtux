@@ -21,13 +21,13 @@ OBJS += $(build)/objs/jtux_util.o
 
 JOBJS = 
 
-INCLUDES = -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux -I./include -I./src/lib/c
+INCLUDES = -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux -I./include -I./src/main/c
 COPTS    = -Wimplicit -Wno-pointer-sign -Wall -D_REENTRANT -D_THREAD_SAFE -std=c99
 LIBS     = libjtux.so jtux.jar
 
 .SUFFIXES: 
 
-$(build)/objs/%.o: src/lib/c/%.c
+$(build)/objs/%.o: src/main/c/%.c
 	$(CC) $(COPTS) $(INCLUDES) -fPIC -DLINUX -c $< -o $@
 
 all: prep $(TARGETS)
