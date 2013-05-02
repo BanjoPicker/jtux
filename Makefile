@@ -1,5 +1,7 @@
 SHELL = /bin/bash
 
+VERSION=1.0
+
 CC    = $(shell which gcc)
 JAVAC = $(shell which javac)
 JAR   = $(shell which jar)
@@ -8,6 +10,7 @@ build = build
 dist  = dist
 
 TARGETS  = $(dist)/lib/libjtux.so
+TARGETS += $(dist)/lib/libjtux.so.$(VERSION)
 TARGETS += $(dist)/lib/jtux.jar
 
 OBJS =  $(build)/objs/jtux_clock.o  
@@ -23,7 +26,6 @@ JOBJS =
 
 INCLUDES = -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux -I./include -I./src/main/c
 COPTS    = -Wimplicit -Wno-pointer-sign -Wall -D_REENTRANT -D_THREAD_SAFE -std=c99
-LIBS     = libjtux.so jtux.jar
 
 .SUFFIXES: 
 
@@ -46,6 +48,9 @@ clean:
 	rm -rf $(build) $(dist) target
 
 $(dist)/lib/libjtux.so: $(build)/lib/libjtux.so
+	install -D --mode=644 $< $@
+
+$(dist)/lib/libjtux.so.$(VERSION): $(build)/lib/libjtux.so
 	install -D --mode=644 $< $@
 
 $(dist)/lib/jtux.jar: $(build)/lib/jtux.jar
